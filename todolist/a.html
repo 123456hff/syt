@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="css/a.css">
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="page-group">
+            <div class="page page-current">
+                <!-- 你的html代码 -->
+
+                <!-- Tab组件 -- start -->
+                <Tab></Tab>
+                <!-- Tab组件 -- end -->
+
+
+                <!-- Container组件 -- start -->
+                <Container :todos ="newTodos" @bb="changeFlag" @cc="check" @add_item="addItem"></Container>
+                <!-- Container组件 -- end -->
+
+
+                <my-mask v-if="maskt" :remove_mask="removeMask" :remove="remove"></my-mask>
+                <Tabbar :type="type" @get_type="changeType"></Tabbar>
+
+            </div>
+        </div>
+    </div>
+
+
+    <template id="tab">
+    <header class="bar bar-nav">
+        <a class="icon icon-left pull-left"></a>
+        <i class="icon icon-edit pull-right" @click = "input_change"></i>
+        <h1 class="title">无尽火域</h1>
+    </header>
+
+</template>
+
+    <template id="container">
+        <div class="content">
+           <input type="text" v-if = "input_flag" @keyup.enter="add">
+            <div class="card" v-for="(todo,index) in todos" :key="todo.id"
+            >
+              <div class="card-content">
+                <div class="card-content-inner">
+                  <p>{{todo.task}} </p>
+                  <div class="btn-box pull-right">
+                    <button class = "button button-success "
+                      :class="{'button-fill':todo.done}"
+                      @click="aa(index)"
+                    >
+                      <i class = "icon icon-check"></i>
+                    </button>
+                    <button class = "button button-danger"
+                    @click="checkDone(index)"
+                 
+                    
+                    
+                    >
+                      <i class="icon icon-remove"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </template>
+
+
+
+
+    <template id="mask">
+      <div class="mask-box">
+        <div class="bg" @click.self="remove_mask" ></div>
+        <div class="mask-content">
+          <p> 您真的确定要删除我吗？ </p>
+          <button class="button button-primary button-fill pull-right" @click.self="confirm" > 确定 </button>
+        </div>
+      </div>
+    </template>
+
+
+    <template id="tabbar">
+      <footer>
+        <ul>
+          <li class="circle" 
+            v-for = "tabbar in tabbars" 
+            :key = " tabbar.id "
+            :class = "[ tabbar.class,type == tabbar.text && 'circle-fill']"
+            @click = "changeType( tabbar.text )"
+          >
+            {{ tabbar.text }}
+          </li>
+        </ul>
+      </footer>
+    </template>
+</body>
+
+</html>
+<script src="../../../lib/vue.js"></script>
+<script src="js/a.js"></script>
